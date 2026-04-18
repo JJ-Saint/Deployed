@@ -1,16 +1,157 @@
-﻿<form>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Eventos</title>
+    <link rel="stylesheet" href="./css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"> Gestor de Eventos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galeria">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#admin">Administración</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class=" text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Sistema de Gestión de Eventos</h1>
+            
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+
+    <div class="container my-5" id="galeria">
+        <h2 class="mb-4"> Galería de Eventos</h2>
+
+        <!-- FILTROS -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <select class="form-select" id="filtroCategoria">
+                    <option value="">Todas las categorías</option>
+                    <option value="Musica">Música</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Cultural">Cultural</option>
+                    <option value="Anime">Anime</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="date" class="form-control" id="filtroFecha" placeholder="Filtrar por fecha">
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-secondary" id="btnFiltrar">Filtrar</button>
+                <button class="btn btn-outline-secondary" id="btnLimpiar">Limpiar</button>
+            </div>
+        </div>
+
+        <!-- GRID DE CARDS (público) -->
+        <div class="row" id="gridEventos">
+            <!-- Los eventos se cargarán aquí dinámicamente -->
+            <div class="col-12 text-center text-muted py-5">
+                Cargando eventos...
+            </div>
+        </div>
     </div>
-    <div class="mb-3 form-check bg-black">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+    <!-- PANEL ADMINISTRADOR (CRUD) -->
+    <div class="bg-light py-5" id="admin">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Panel de Administración</h2>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEvento" id="btnNuevo">+ Nuevo Evento</button>
+            </div>
+
+            <!-- TABLA ADMIN -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover bg-white">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Ubicación</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaEventos">
+                        <tr>
+                            <td colspan="8" class="text-center">No hay eventos registrados</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+    <!-- MODAL PARA CREAR/EDITAR EVENTO -->
+    <div class="modal fade" id="modalEvento" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitulo">Crear Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEvento">
+                        <input type="hidden" id="eventoId">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Categoría *</label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="">Seleccionar</option>
+                                    <option value="Musica">Música</option>
+                                    <option value="Deportes">Deportes</option>
+                                    <option value="Cultural">Cultural</option>
+                                    <option value="Anime">Anime</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha y Hora *</label>
+                                <input type="datetime-local" class="form-control" id="fecha" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ubicación *</label>
+                                <input type="text" class="form-control" id="ubicacion" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">URL de Imagen (Poster)</label>
+                                <input type="file" class="form-control" id="imagenUrl" placeholder="https://ejemplo.com/imagen.jpg">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>

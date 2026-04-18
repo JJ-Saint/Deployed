@@ -1,3 +1,13 @@
+*{
+  margin: 0;
+  padding:10px;
+  background-color: rgb(172 18 18 / 0, 78);
+}
+
+body{
+  background-color: #aa9eb6;
+}
+
 html {
   font-size: 14px;
 }
@@ -29,3 +39,4 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
